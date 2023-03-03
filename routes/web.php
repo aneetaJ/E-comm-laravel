@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('login');
 });
+Route::get('/register', function () {
+    return view('register');
+});
+Route::get('/logout', function () {
+    session()->forget('user');
+    return redirect('login');
+});
+Route::post('/login',[UserController::class,'login']);
+Route::post('/register',[UserController::class,'register']);
+Route::get('/',[ProductController::class,'index']);
+Route::get('/detail/{id}',[ProductController::class,'detail']);
+Route::post('/add_to_cart',[ProductController::class,'addToCart']);
+Route::get('/cartlist',[ProductController::class,'cartList']);
+Route::get('/removefromcart/{id}',[ProductController::class,'removeFromCart']);
+Route::get('/ordernow',[ProductController::class,'orderNow']);
+Route::post('/placeorder',[ProductController::class,'placeOrder']);
+Route::get('/myorders',[ProductController::class,'myOrders']);
+Route::post('/search',[ProductController::class,'search']);
+
+
